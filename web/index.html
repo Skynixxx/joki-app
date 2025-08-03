@@ -22,8 +22,8 @@
   <meta name="description" content="A new Flutter project.">
 
   <!-- Google Sign-In Client ID -->
-  <meta name="google-signin-client_id"
-    content="885605446677-qcmg6nkdampn2a8sdhtrcj2o44pf907v.apps.googleusercontent.com">
+  <!-- Note: Use environment variable for production -->
+  <meta name="google-signin-client_id" content="">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -48,18 +48,21 @@
   <!-- Firebase Configuration -->
   <script>
     // Your web app's Firebase configuration
+    // Note: In production, use environment variables or secure configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyCFAdmX0OJNiwkQjqWoqcQtP_l7sXn35OQ",
-      authDomain: "joki-tugas-app.firebaseapp.com",
-      projectId: "joki-tugas-app",
-      storageBucket: "joki-tugas-app.firebasestorage.app",
-      messagingSenderId: "885605446677",
-      appId: "1:885605446677:web:6c0cc43108c08b17020a1c",
-      measurementId: "G-VXT5MCXVXJ"
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: "",
+      measurementId: ""
     };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase only if config is provided
+    if (firebaseConfig.apiKey) {
+      firebase.initializeApp(firebaseConfig);
+    }
   </script>
 </head>
 

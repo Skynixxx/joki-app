@@ -3,8 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:async';
 import 'auth_screen.dart';
 import 'home_screen.dart';
-import '../constants/app_constants.dart';
-import '../widgets/custom_loading.dart';
 import '../services/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -50,24 +48,44 @@ class _SplashScreenState extends State<SplashScreen>
   _navigateToNextScreen() {
     Timer(const Duration(seconds: 3), () {
       // Check if user is already logged in
-      if (AuthService.isLoggedIn && AuthService.currentUser != null) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder:
-                (context, animation, secondaryAnimation) => const HomeScreen(),
-            transitionsBuilder: (
-              context,
-              animation,
-              secondaryAnimation,
-              child,
-            ) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            transitionDuration: const Duration(milliseconds: 800),
-          ),
-        );
-      } else {
+      try {
+        if (AuthService.isLoggedIn && AuthService.currentUser != null) {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder:
+                  (context, animation, secondaryAnimation) => const HomeScreen(),
+              transitionsBuilder: (
+                context,
+                animation,
+                secondaryAnimation,
+                child,
+              ) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              transitionDuration: const Duration(milliseconds: 800),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder:
+                  (context, animation, secondaryAnimation) => const AuthScreen(),
+              transitionsBuilder: (
+                context,
+                animation,
+                secondaryAnimation,
+                child,
+              ) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              transitionDuration: const Duration(milliseconds: 800),
+            ),
+          );
+        }
+      } catch (e) {
+        // If there's any error, go to auth screen
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
@@ -96,9 +114,22 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    const primaryColor = Color(0xFF6B73FF);
+    const accentColor = Color(0xFF9C27B0);
+    
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.splashGradient),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              primaryColor,
+              Color(0xFF8A7FFF),
+              accentColor,
+            ],
+          ),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +159,7 @@ class _SplashScreenState extends State<SplashScreen>
                         child: const Icon(
                           Icons.assignment_turned_in,
                           size: 60,
-                          color: AppColors.primary,
+                          color: primaryColor,
                         ),
                       ),
                     ),
@@ -179,7 +210,10 @@ class _SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 60),
 
               // Loading indicator
-              const CustomLoadingWidget(size: 40, color: Colors.white)
+              const CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 3,
+              )
                   .animate()
                   .fadeIn(delay: 1200.ms, duration: 400.ms)
                   .scale(begin: Offset(0.5, 0.5), end: Offset(1.0, 1.0)),

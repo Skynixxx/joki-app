@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/splash_screen.dart';
@@ -8,11 +9,18 @@ import 'services/auth_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
-  await Firebase.initializeApp(options: FirebaseConfig.currentPlatform);
+  try {
+    // Initialize Firebase
+    await Firebase.initializeApp(options: FirebaseConfig.currentPlatform);
 
-  // Initialize AuthService to check for existing user
-  await AuthService.initialize();
+    // Initialize AuthService to check for existing user
+    await AuthService.initialize();
+  } catch (e) {
+    // Handle Firebase initialization error gracefully
+    if (kDebugMode) {
+      debugPrint('Firebase initialization error: $e');
+    }
+  }
 
   runApp(const JokiApp());
 }

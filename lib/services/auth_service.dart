@@ -3,6 +3,7 @@ import '../models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthService {
   static User? _currentUser;
@@ -175,7 +176,7 @@ class AuthService {
     }
   }
 
-  // Social login with Google
+  // Social login with Google (Simplified)
   static Future<User?> loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -193,37 +194,55 @@ class AuthService {
       );
 
       final userCredential = await _auth.signInWithCredential(credential);
+      final firebaseUser = userCredential.user;
 
-      if (userCredential.user != null) {
-        // Save user data to Firestore if it's a new user
+      if (firebaseUser != null) {
+        // Use Firebase User data directly (no People API needed)
+        final userData = {
+          'uid': firebaseUser.uid,
+          'name': firebaseUser.displayName ?? googleUser.displayName ?? 'Google User',
+          'email': firebaseUser.email ?? googleUser.email,
+          'photoUrl': firebaseUser.photoURL ?? '',
+          'isVerified': firebaseUser.emailVerified,
+          'provider': 'google',
+          'createdAt': FieldValue.serverTimestamp(),
+        };
+
+        // Save to Firestore if new user
         if (userCredential.additionalUserInfo?.isNewUser == true) {
           await _firestore
               .collection('users')
-              .doc(userCredential.user!.uid)
-              .set({
-                'uid': userCredential.user!.uid,
-                'name': userCredential.user!.displayName ?? 'Google User',
-                'email': userCredential.user!.email,
-                'photoUrl': userCredential.user!.photoURL ?? '',
-                'isVerified': true,
-                'createdAt': FieldValue.serverTimestamp(),
-                'provider': 'google',
-              });
+              .doc(firebaseUser.uid)
+              .set(userData);
+        } else {
+          // Update existing user data
+          await _firestore
+              .collection('users')
+              .doc(firebaseUser.uid)
+              .update({
+            'name': userData['name'],
+            'photoUrl': userData['photoUrl'],
+            'lastSignIn': FieldValue.serverTimestamp(),
+          });
         }
 
         _currentUser = User(
-          id: userCredential.user!.uid,
-          name: userCredential.user!.displayName ?? 'Google User',
-          email: userCredential.user!.email!,
-          profileImage: userCredential.user!.photoURL,
+          id: firebaseUser.uid,
+          name: userData['name'] as String,
+          email: userData['email'] as String,
+          profileImage: (userData['photoUrl'] as String).isNotEmpty ? userData['photoUrl'] as String : null,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
+        
         return _currentUser;
       }
       return null;
     } catch (e) {
-      print('Error signing in with Google: $e');
+      // Log error for debugging in development
+      if (kDebugMode) {
+        debugPrint('Error signing in with Google: $e');
+      }
       return null;
     }
   }

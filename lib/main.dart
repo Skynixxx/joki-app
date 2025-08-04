@@ -3,8 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/splash_screen.dart';
+import 'screens/auth_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/forgot_password_screen.dart';
 import 'config/firebase_config.dart';
 import 'services/auth_service.dart';
+import 'services/session_manager.dart';
+import 'widgets/activity_detector.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +67,41 @@ class JokiApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SplashScreen(),
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/auth': (context) => const AuthScreen(),
+        '/home': (context) => _SessionManagedHome(),
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
+      },
+      initialRoute: '/',
     );
+  }
+}
+
+// Wrapper widget untuk HomeScreen dengan session management
+class _SessionManagedHome extends StatefulWidget {
+  @override
+  State<_SessionManagedHome> createState() => _SessionManagedHomeState();
+}
+
+class _SessionManagedHomeState extends State<_SessionManagedHome> {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize session manager ketika masuk ke home
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SessionManager.initialize(context);
+    });
+  }
+
+  @override
+  void dispose() {
+    SessionManager.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ActivityDetector(child: const HomeScreen());
   }
 }

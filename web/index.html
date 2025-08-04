@@ -23,7 +23,8 @@
 
   <!-- Google Sign-In Client ID -->
   <!-- Note: Use environment variable for production -->
-  <meta name="google-signin-client_id" content="885605446677-qcmg6nkdampn2a8sdhtrcj2o44pf907v.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="885605446677-qcmg6nkdampn2a8sdhtrcj2o44pf907v.apps.googleusercontent.com">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -42,26 +43,43 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
+  <!-- Load Firebase configuration (this file should not be committed) -->
+  <script src="firebase_config.js"></script>
+
   <!-- Google Sign-In SDK -->
   <script src="https://apis.google.com/js/api.js"></script>
 
   <!-- Firebase Configuration -->
   <script>
-    // Your web app's Firebase configuration
-    // Note: In production, use environment variables or secure configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCFAdmX0OJNiwkQjqWoqcQtP_l7sXn35OQ",
-      authDomain: "joki-tugas-app.firebaseapp.com",
-      projectId: "joki-tugas-app",
-      storageBucket: "joki-tugas-app.firebasestorage.app",
-      messagingSenderId: "885605446677",
-      appId: "1:885605446677:web:6c0cc43108c08b17020a1c",
-      measurementId: "G-VXT5MCXVXJ"
-    };
+    // Firebase configuration - Use environment variables in production
+    // For development, create a local firebase_config.js file
+    
+    // Check if firebase_config.js exists (not committed to repo)
+    let firebaseConfig = null;
+    
+    // In production, load from environment variables
+    if (typeof FIREBASE_CONFIG !== 'undefined') {
+      firebaseConfig = FIREBASE_CONFIG;
+    } else {
+      // For development - create firebase_config.js locally
+      console.warn('Firebase config not found. Create firebase_config.js locally.');
+      firebaseConfig = {
+        // These are placeholder values - replace with your actual config
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        projectId: "YOUR_PROJECT",
+        storageBucket: "YOUR_PROJECT.firebasestorage.app",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID",
+        measurementId: "YOUR_MEASUREMENT_ID"
+      };
+    }
 
-    // Initialize Firebase only if config is provided
-    if (firebaseConfig.apiKey) {
+    // Initialize Firebase only if config is valid
+    if (firebaseConfig && firebaseConfig.apiKey !== "YOUR_API_KEY") {
       firebase.initializeApp(firebaseConfig);
+    } else {
+      console.error('Firebase configuration is not properly set up.');
     }
   </script>
 </head>

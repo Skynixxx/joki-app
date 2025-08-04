@@ -46,19 +46,58 @@ app.*.map.json
 
 # Environment variables and secrets
 .env
+.env.*
 .env.local
 .env.development
 .env.production
+.env.staging
 
-# Firebase private keys
+# Firebase private keys and configuration
 firebase-adminsdk-*.json
 google-services.json
 GoogleService-Info.plist
+firebase_options.dart
+lib/firebase_options.dart
+lib/firebase_config.dart
+lib/config/firebase_config.dart
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+web/firebase_config.js
 
 # API Keys and secrets
 *.key
 *.pem
+*.p8
+*.p12
+*.keystore
+*.jks
+api_keys.dart
+secrets.dart
+config.dart
+credentials.json
+
+# Google services and API keys
+google-services.json
+GoogleService-Info.plist
+google-credentials.json
+service-account.json
+
+# AWS and other cloud credentials
+aws-credentials
+.aws/
+credentials
 
 # Local configuration
 local.properties
 local.json
+config.json
+secrets.json
+
+# IDE and OS specific sensitive files
+.vscode/settings.json
+.idea/workspace.xml
+
+# Backup files that might contain sensitive data
+*.bak
+*.backup
+*_backup.*

@@ -2,7 +2,7 @@
 
 ## ⚠️ Important Security Notice
 
-The Firebase API keys and Google Sign-In client IDs have been removed from the public repository for security reasons. 
+The Firebase API keys and Google Sign-In client IDs have been removed from the public repository for security reasons.
 
 ## 🛠️ Setup Instructions
 
@@ -40,7 +40,7 @@ Update `web/index.html` with your actual configuration:
 
 ```html
 <!-- Google Sign-In Client ID -->
-<meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID">
+<meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID" />
 
 <!-- Firebase Configuration -->
 <script>
@@ -51,9 +51,9 @@ Update `web/index.html` with your actual configuration:
     storageBucket: "YOUR_STORAGE_BUCKET",
     messagingSenderId: "YOUR_SENDER_ID",
     appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+    measurementId: "YOUR_MEASUREMENT_ID",
   };
-  
+
   firebase.initializeApp(firebaseConfig);
 </script>
 ```
@@ -92,5 +92,6 @@ service cloud.firestore {
 ## 📞 Support
 
 If you need help with security configuration, please check:
+
 - [Firebase Security Documentation](https://firebase.google.com/docs/rules)
 - [Google Sign-In Security Best Practices](https://developers.google.com/identity/sign-in/web/security)

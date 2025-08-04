@@ -51,151 +51,6 @@ class _AuthScreenState extends State<AuthScreen>
     super.dispose();
   }
 
-  // Show forgot password dialog
-  void _showForgotPasswordDialog(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSizes.radiusM),
-          ),
-          title: Row(
-            children: [
-              const FaIcon(
-                FontAwesomeIcons.key,
-                color: AppColors.primary,
-                size: 20,
-              ),
-              const SizedBox(width: AppSizes.paddingS),
-              const Text('Reset Password', style: AppTextStyles.headline4),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Masukkan email Anda untuk mendapatkan link reset password',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: AppSizes.paddingL),
-              TextFormField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: AppDecorations.inputDecoration(
-                  label: 'Email',
-                  icon: FontAwesomeIcons.envelope,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                'Batal',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-            ),
-            Container(
-              decoration: AppDecorations.gradientButtonDecoration,
-              child: TextButton(
-                onPressed: () {
-                  if (emailController.text.isNotEmpty &&
-                      AppHelpers.isValidEmail(emailController.text)) {
-                    // Simulate sending reset email
-                    Navigator.of(context).pop();
-                    _showResetEmailSentDialog(context, emailController.text);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Masukkan email yang valid'),
-                        backgroundColor: AppColors.error,
-                      ),
-                    );
-                  }
-                },
-                child: const Text(
-                  'Kirim Link',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // Show confirmation dialog after reset email sent
-  void _showResetEmailSentDialog(BuildContext context, String email) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSizes.radiusM),
-          ),
-          title: Row(
-            children: [
-              const FaIcon(
-                FontAwesomeIcons.circleCheck,
-                color: AppColors.success,
-                size: 20,
-              ),
-              const SizedBox(width: AppSizes.paddingS),
-              const Text('Email Terkirim', style: AppTextStyles.headline4),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Link reset password telah dikirim ke:',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: AppSizes.paddingS),
-              Text(
-                email,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
-              ),
-              const SizedBox(height: AppSizes.paddingM),
-              Text(
-                'Periksa inbox atau folder spam Anda.',
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          actions: [
-            Container(
-              decoration: AppDecorations.gradientButtonDecoration,
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK', style: TextStyle(color: Colors.white)),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -350,22 +205,6 @@ class _AuthScreenState extends State<AuthScreen>
               },
             ),
 
-            const SizedBox(height: 8),
-
-            // Forgot Password
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  _showForgotPasswordDialog(context);
-                },
-                child: const Text(
-                  'Lupa Password?',
-                  style: TextStyle(color: AppColors.primary),
-                ),
-              ),
-            ),
-
             const SizedBox(height: 24),
 
             // Login Button
@@ -400,6 +239,25 @@ class _AuthScreenState extends State<AuthScreen>
                   }
                 }
               },
+            ),
+
+            const SizedBox(height: 16),
+
+            // Forgot Password Button
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/forgot-password');
+                },
+                child: const Text(
+                  'Lupa Password?',
+                  style: TextStyle(
+                    color: Color(0xFF6B73FF),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
 
             const SizedBox(height: 24),

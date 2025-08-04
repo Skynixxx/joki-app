@@ -5,6 +5,8 @@ import '../constants/app_constants.dart';
 import '../services/auth_service.dart';
 import '../utils/app_helpers.dart';
 import 'auth_screen.dart';
+import 'edit_profile_screen.dart';
+import '../widgets/profile_avatar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,14 +81,9 @@ class DashboardTab extends StatelessWidget {
             // Header
             Row(
               children: [
-                CircleAvatar(
+                ProfileAvatar(
+                  imageUrl: AuthService.currentUser?.profileImage,
                   radius: 24,
-                  backgroundColor: AppColors.primary,
-                  child: const FaIcon(
-                    FontAwesomeIcons.user,
-                    color: Colors.white,
-                    size: 20,
-                  ),
                 ),
                 const SizedBox(width: AppSizes.paddingM),
                 Expanded(
@@ -455,14 +452,9 @@ class ProfileTab extends StatelessWidget {
               decoration: AppDecorations.cardDecoration,
               child: Column(
                 children: [
-                  CircleAvatar(
+                  ProfileAvatar(
+                    imageUrl: AuthService.currentUser?.profileImage,
                     radius: 40,
-                    backgroundColor: AppColors.primary,
-                    child: const FaIcon(
-                      FontAwesomeIcons.user,
-                      color: Colors.white,
-                      size: 30,
-                    ),
                   ),
                   const SizedBox(height: AppSizes.paddingM),
                   Text(
@@ -491,7 +483,15 @@ class ProfileTab extends StatelessWidget {
                           _ProfileMenuItem(
                             icon: FontAwesomeIcons.user,
                             title: 'Edit Profil',
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => const EditProfileScreen(),
+                                ),
+                              );
+                            },
                           ),
                           _ProfileMenuItem(
                             icon: FontAwesomeIcons.creditCard,

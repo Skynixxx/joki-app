@@ -3,6 +3,7 @@ class User {
   final String name;
   final String email;
   final String? profileImage;
+  final String? phoneNumber;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -11,6 +12,7 @@ class User {
     required this.name,
     required this.email,
     this.profileImage,
+    this.phoneNumber,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -21,6 +23,7 @@ class User {
       name: json['name'],
       email: json['email'],
       profileImage: json['profile_image'],
+      phoneNumber: json['phone_number'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -32,6 +35,7 @@ class User {
       'name': name,
       'email': email,
       'profile_image': profileImage,
+      'phone_number': phoneNumber,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
@@ -42,6 +46,7 @@ class User {
     String? name,
     String? email,
     String? profileImage,
+    String? phoneNumber,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -50,6 +55,7 @@ class User {
       name: name ?? this.name,
       email: email ?? this.email,
       profileImage: profileImage ?? this.profileImage,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

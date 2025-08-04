@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:async';
-import 'auth_screen.dart';
-import 'home_screen.dart';
 import '../services/auth_service.dart';
+import '../services/persistent_login_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -45,65 +44,32 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
   }
 
-  _navigateToNextScreen() {
-    Timer(const Duration(seconds: 3), () {
-      // Check if user is already logged in
-      try {
-        if (AuthService.isLoggedIn && AuthService.currentUser != null) {
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder:
-                  (context, animation, secondaryAnimation) => const HomeScreen(),
-              transitionsBuilder: (
-                context,
-                animation,
-                secondaryAnimation,
-                child,
-              ) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              transitionDuration: const Duration(milliseconds: 800),
-            ),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder:
-                  (context, animation, secondaryAnimation) => const AuthScreen(),
-              transitionsBuilder: (
-                context,
-                animation,
-                secondaryAnimation,
-                child,
-              ) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              transitionDuration: const Duration(milliseconds: 800),
-            ),
-          );
+  _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    try {
+      // Check persistent login first
+      final isPersistedLogin = await PersistentLoginService.isLoggedIn();
+
+      if (isPersistedLogin &&
+          AuthService.isLoggedIn &&
+          AuthService.currentUser != null) {
+        // User is logged in, go to home
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
         }
-      } catch (e) {
-        // If there's any error, go to auth screen
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder:
-                (context, animation, secondaryAnimation) => const AuthScreen(),
-            transitionsBuilder: (
-              context,
-              animation,
-              secondaryAnimation,
-              child,
-            ) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            transitionDuration: const Duration(milliseconds: 800),
-          ),
-        );
+      } else {
+        // User not logged in, go to auth screen
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(context, '/auth', (route) => false);
+        }
       }
-    });
+    } catch (e) {
+      // On error, go to auth screen
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, '/auth', (route) => false);
+      }
+    }
   }
 
   @override
@@ -116,18 +82,14 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     const primaryColor = Color(0xFF6B73FF);
     const accentColor = Color(0xFF9C27B0);
-    
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              primaryColor,
-              Color(0xFF8A7FFF),
-              accentColor,
-            ],
+            colors: [primaryColor, Color(0xFF8A7FFF), accentColor],
           ),
         ),
         child: Center(
@@ -211,9 +173,9 @@ class _SplashScreenState extends State<SplashScreen>
 
               // Loading indicator
               const CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 3,
-              )
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  )
                   .animate()
                   .fadeIn(delay: 1200.ms, duration: 400.ms)
                   .scale(begin: Offset(0.5, 0.5), end: Offset(1.0, 1.0)),

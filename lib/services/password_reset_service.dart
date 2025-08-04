@@ -65,10 +65,20 @@ class PasswordResetService {
   }
 
   /// Memeriksa apakah email sudah terdaftar di Firebase Auth
+  /// Note: Using createUserWithEmailAndPassword untuk check existence karena
+  /// fetchSignInMethodsForEmail is deprecated for security reasons
   static Future<bool> checkEmailExists(String email) async {
     try {
-      final methods = await _auth.fetchSignInMethodsForEmail(email.trim());
-      return methods.isNotEmpty;
+      // Alternative method: Try to send password reset email
+      // Jika email tidak ada, akan throw error
+      await _auth.sendPasswordResetEmail(email: email.trim());
+      return true; // Email exists if no exception thrown
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return false; // Email doesn't exist
+      }
+      // For other errors, assume email exists for security
+      return true;
     } catch (e) {
       if (kDebugMode) {
         debugPrint('Error checking email existence: $e');

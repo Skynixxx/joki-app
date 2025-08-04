@@ -38,6 +38,7 @@ class AppColors {
   static const Color textLight = Color(0xFFA0AEC0);
 
   // Background Colors
+  static const Color background = Color(0xFFF8F9FF);
   static const Color backgroundLight = Color(0xFFF8F9FF);
   static const Color backgroundCard = Colors.white;
   static const Color backgroundInput = Color(0xFFF7FAFC);
@@ -54,7 +55,6 @@ class AppColors {
 
   // Social Colors
   static const Color google = Color(0xFFDB4437);
-  static const Color facebook = Color(0xFF4267B2);
   static const Color twitter = Color(0xFF1DA1F2);
 
   // Shadow Colors

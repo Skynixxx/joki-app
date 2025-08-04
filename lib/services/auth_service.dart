@@ -1,4 +1,3 @@
-import '../models/user.dart';
 import '../models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +8,7 @@ import 'package:crypto/crypto.dart';
 import 'persistent_login_service.dart';
 
 class AuthService {
-  static User? _currentUser;
+  static UserModel? _currentUser;
   static final firebase_auth.FirebaseAuth _auth =
       firebase_auth.FirebaseAuth.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -58,10 +57,9 @@ class AuthService {
 
             if (doc.exists) {
               final userData = UserModel.fromFirestore(doc);
-              String? profileImageUrl =
-                  userData.photoUrl.isNotEmpty ? userData.photoUrl : null;
+              String profileImageUrl = userData.photoUrl;
 
-              if (profileImageUrl == null || profileImageUrl.isEmpty) {
+              if (profileImageUrl.isEmpty) {
                 profileImageUrl = getDefaultProfileImage(
                   userData.uid,
                   email: userData.email,
@@ -72,13 +70,13 @@ class AuthService {
                     .update({'photoUrl': profileImageUrl});
               }
 
-              _currentUser = User(
-                id: userData.uid,
+              _currentUser = UserModel(
+                uid: userData.uid,
                 name: userData.name,
                 email: userData.email,
-                profileImage: profileImageUrl,
+                photoUrl: profileImageUrl,
+                isVerified: userData.isVerified,
                 createdAt: userData.createdAt,
-                updatedAt: userData.updatedAt ?? userData.createdAt,
               );
 
               if (kDebugMode) {
@@ -88,13 +86,13 @@ class AuthService {
             }
           } else {
             // Create user from saved data (fallback)
-            _currentUser = User(
-              id: savedUserData['userId']!,
+            _currentUser = UserModel(
+              uid: savedUserData['userId']!,
               name: savedUserData['name'] ?? 'User',
               email: savedUserData['email'] ?? '',
-              profileImage: savedUserData['profileImage'],
+              photoUrl: savedUserData['profileImage'] ?? '',
+              isVerified: false,
               createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
             );
 
             if (kDebugMode) {
@@ -114,10 +112,9 @@ class AuthService {
 
         if (doc.exists) {
           final userData = UserModel.fromFirestore(doc);
-          String? profileImageUrl =
-              userData.photoUrl.isNotEmpty ? userData.photoUrl : null;
+          String profileImageUrl = userData.photoUrl;
 
-          if (profileImageUrl == null || profileImageUrl.isEmpty) {
+          if (profileImageUrl.isEmpty) {
             profileImageUrl = getDefaultProfileImage(
               userData.uid,
               email: userData.email,
@@ -127,13 +124,13 @@ class AuthService {
             });
           }
 
-          _currentUser = User(
-            id: userData.uid,
+          _currentUser = UserModel(
+            uid: userData.uid,
             name: userData.name,
             email: userData.email,
-            profileImage: profileImageUrl,
+            photoUrl: profileImageUrl,
+            isVerified: userData.isVerified,
             createdAt: userData.createdAt,
-            updatedAt: userData.updatedAt ?? userData.createdAt,
           );
 
           // Save login state for persistence
@@ -155,7 +152,7 @@ class AuthService {
   }
 
   // Login with Firebase
-  static Future<User?> login(String email, String password) async {
+  static Future<UserModel?> login(String email, String password) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -171,14 +168,13 @@ class AuthService {
 
         if (doc.exists) {
           final userData = UserModel.fromFirestore(doc);
-          _currentUser = User(
-            id: userData.uid,
+          _currentUser = UserModel(
+            uid: userData.uid,
             name: userData.name,
             email: userData.email,
-            profileImage:
-                userData.photoUrl.isNotEmpty ? userData.photoUrl : null,
+            photoUrl: userData.photoUrl.isNotEmpty ? userData.photoUrl : '',
+            isVerified: userData.isVerified,
             createdAt: userData.createdAt,
-            updatedAt: userData.updatedAt ?? userData.createdAt,
           );
           return _currentUser;
         }
@@ -190,7 +186,7 @@ class AuthService {
   }
 
   // Register with Firebase
-  static Future<User?> register({
+  static Future<UserModel?> register({
     required String name,
     required String email,
     required String password,
@@ -221,13 +217,13 @@ class AuthService {
         // Update display name
         await credential.user!.updateDisplayName(name);
 
-        _currentUser = User(
-          id: credential.user!.uid,
+        _currentUser = UserModel(
+          uid: credential.user!.uid,
           name: name,
           email: credential.user!.email!,
-          profileImage: defaultAvatar,
+          photoUrl: defaultAvatar,
+          isVerified: false,
           createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
         );
 
         // Save login state for persistence
@@ -247,7 +243,7 @@ class AuthService {
   }
 
   // Get current user
-  static User? get currentUser => _currentUser;
+  static UserModel? get currentUser => _currentUser;
 
   // Check if user is logged in
   static bool get isLoggedIn => _currentUser != null;
@@ -271,7 +267,7 @@ class AuthService {
   }
 
   // Update profile with Firebase
-  static Future<User?> updateProfile({
+  static Future<UserModel?> updateProfile({
     required String name,
     String? profileImage,
     String? phoneNumber,
@@ -307,11 +303,7 @@ class AuthService {
       }
 
       // Update local user object
-      _currentUser = _currentUser!.copyWith(
-        name: name,
-        profileImage: profileImage,
-        updatedAt: DateTime.now(),
-      );
+      _currentUser = _currentUser!.copyWith(name: name, photoUrl: profileImage);
 
       return _currentUser;
     } catch (e) {
@@ -340,8 +332,8 @@ class AuthService {
 
       await user.reauthenticateWithCredential(credential);
 
-      // Update email
-      await user.updateEmail(newEmail);
+      // Update email using new secure method
+      await user.verifyBeforeUpdateEmail(newEmail);
 
       // Update email in Firestore
       await _firestore.collection('users').doc(user.uid).update({
@@ -391,7 +383,7 @@ class AuthService {
   }
 
   // Social login with Google (Simplified)
-  static Future<User?> loginWithGoogle() async {
+  static Future<UserModel?> loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
@@ -449,13 +441,13 @@ class AuthService {
           });
         }
 
-        _currentUser = User(
-          id: firebaseUser.uid,
+        _currentUser = UserModel(
+          uid: firebaseUser.uid,
           name: userData['name'] as String,
           email: userData['email'] as String,
-          profileImage: profileImageUrl,
+          photoUrl: profileImageUrl,
+          isVerified: userData['isVerified'] as bool,
           createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
         );
 
         // Save login state for persistence
@@ -478,16 +470,16 @@ class AuthService {
     }
   }
 
-  static Future<User?> loginWithFacebook() async {
+  static Future<UserModel?> loginWithFacebook() async {
     await Future.delayed(const Duration(seconds: 2));
 
-    _currentUser = User(
-      id: 'facebook_${DateTime.now().millisecondsSinceEpoch}',
+    _currentUser = UserModel(
+      uid: 'facebook_${DateTime.now().millisecondsSinceEpoch}',
       name: 'Facebook User',
       email: 'user@facebook.com',
-      profileImage: 'https://example.com/avatar.jpg',
+      photoUrl: 'https://example.com/avatar.jpg',
+      isVerified: false,
       createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
     );
 
     return _currentUser;

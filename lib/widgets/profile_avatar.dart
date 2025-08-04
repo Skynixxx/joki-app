@@ -20,8 +20,8 @@ class ProfileAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final effectiveBackgroundColor =
-        backgroundColor ?? primaryColor.withOpacity(0.1);
-    final effectiveIconColor = iconColor ?? primaryColor.withOpacity(0.5);
+        backgroundColor ?? primaryColor.withValues(alpha: 0.1);
+    final effectiveIconColor = iconColor ?? primaryColor.withValues(alpha: 0.5);
 
     return CircleAvatar(
       radius: radius,

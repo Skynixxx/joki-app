@@ -169,6 +169,19 @@ class _AuthScreenState extends State<AuthScreen>
               label: 'Email',
               icon: FontAwesomeIcons.envelope,
               keyboardType: TextInputType.emailAddress,
+              onChanged: (value) {
+                // Auto convert to lowercase
+                final lowercaseValue = value.toLowerCase();
+                if (value != lowercaseValue) {
+                  _loginEmailController.value = _loginEmailController.value
+                      .copyWith(
+                        text: lowercaseValue,
+                        selection: TextSelection.collapsed(
+                          offset: lowercaseValue.length,
+                        ),
+                      );
+                }
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Email tidak boleh kosong';
@@ -205,6 +218,25 @@ class _AuthScreenState extends State<AuthScreen>
               },
             ),
 
+            const SizedBox(height: 16),
+
+            // Forgot Password Button
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/forgot-password');
+                },
+                child: const Text(
+                  'Lupa Password?',
+                  style: TextStyle(
+                    color: Color(0xFF6B73FF),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+
             const SizedBox(height: 24),
 
             // Login Button
@@ -239,25 +271,6 @@ class _AuthScreenState extends State<AuthScreen>
                   }
                 }
               },
-            ),
-
-            const SizedBox(height: 16),
-
-            // Forgot Password Button
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/forgot-password');
-                },
-                child: const Text(
-                  'Lupa Password?',
-                  style: TextStyle(
-                    color: Color(0xFF6B73FF),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
             ),
 
             const SizedBox(height: 24),
@@ -319,44 +332,6 @@ class _AuthScreenState extends State<AuthScreen>
                     },
                   ),
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildSocialButton(
-                    icon: FontAwesomeIcons.facebook,
-                    label: 'Facebook',
-                    color: AppColors.facebook,
-                    onPressed: () async {
-                      AppHelpers.showLoadingDialog(
-                        context,
-                        message: 'Masuk dengan Facebook...',
-                      );
-
-                      final user = await AuthService.loginWithFacebook();
-
-                      if (mounted) {
-                        AppHelpers.hideLoadingDialog(context);
-
-                        if (user != null) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                          );
-                          AppHelpers.showSuccess(
-                            context,
-                            'Login dengan Facebook berhasil!',
-                          );
-                        } else {
-                          AppHelpers.showError(
-                            context,
-                            'Login dengan Facebook gagal!',
-                          );
-                        }
-                      }
-                    },
-                  ),
-                ),
               ],
             ),
           ],
@@ -399,6 +374,20 @@ class _AuthScreenState extends State<AuthScreen>
               label: 'Email',
               icon: FontAwesomeIcons.envelope,
               keyboardType: TextInputType.emailAddress,
+              onChanged: (value) {
+                // Auto convert to lowercase
+                final lowercaseValue = value.toLowerCase();
+                if (value != lowercaseValue) {
+                  _registerEmailController.value = _registerEmailController
+                      .value
+                      .copyWith(
+                        text: lowercaseValue,
+                        selection: TextSelection.collapsed(
+                          offset: lowercaseValue.length,
+                        ),
+                      );
+                }
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Email tidak boleh kosong';
@@ -528,12 +517,14 @@ class _AuthScreenState extends State<AuthScreen>
     bool isPasswordVisible = false,
     VoidCallback? onTogglePassword,
     String? Function(String?)? validator,
+    void Function(String)? onChanged,
   }) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: isPassword && !isPasswordVisible,
       validator: validator,
+      onChanged: onChanged,
       decoration: AppDecorations.inputDecoration(
         label: label,
         icon: icon,

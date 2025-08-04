@@ -152,10 +152,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF6B73FF).withOpacity(0.1),
+                            color: const Color(
+                              0xFF6B73FF,
+                            ).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: const Color(0xFF6B73FF).withOpacity(0.3),
+                              color: const Color(
+                                0xFF6B73FF,
+                              ).withValues(alpha: 0.3),
                             ),
                           ),
                           child: const Column(
@@ -185,10 +189,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF6B73FF).withOpacity(0.1),
+                            color: const Color(
+                              0xFF6B73FF,
+                            ).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: const Color(0xFF6B73FF).withOpacity(0.3),
+                              color: const Color(
+                                0xFF6B73FF,
+                              ).withValues(alpha: 0.3),
                             ),
                           ),
                           child: const Column(
@@ -247,7 +255,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final user = AuthService.currentUser;
     if (user == null) return;
 
-    final avatarOptions = AuthService.getAvatarOptions(user.id);
+    final avatarOptions = AuthService.getAvatarOptions(user.uid);
 
     showDialog(
       context: context,
@@ -350,7 +358,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: Stack(
                   children: [
                     ProfileAvatar(
-                      imageUrl: AuthService.currentUser?.profileImage,
+                      imageUrl: AuthService.currentUser?.photoUrl ?? '',
                       radius: 60,
                     ),
                     Positioned(

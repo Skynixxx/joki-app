@@ -6,6 +6,7 @@ import 'screens/splash_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/forgot_password_screen.dart';
+import 'screens/help_support_screen.dart';
 import 'config/firebase_config.dart';
 import 'services/auth_service.dart';
 import 'services/session_manager.dart';
@@ -72,6 +73,7 @@ class JokiApp extends StatelessWidget {
         '/auth': (context) => const AuthScreen(),
         '/home': (context) => _SessionManagedHome(),
         '/forgot-password': (context) => const ForgotPasswordScreen(),
+        '/help-support': (context) => const HelpSupportScreen(),
       },
       initialRoute: '/',
     );

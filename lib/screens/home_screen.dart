@@ -82,7 +82,7 @@ class DashboardTab extends StatelessWidget {
             Row(
               children: [
                 ProfileAvatar(
-                  imageUrl: AuthService.currentUser?.profileImage,
+                  imageUrl: AuthService.currentUser?.photoUrl,
                   radius: 24,
                 ),
                 const SizedBox(width: AppSizes.paddingM),
@@ -453,7 +453,7 @@ class ProfileTab extends StatelessWidget {
               child: Column(
                 children: [
                   ProfileAvatar(
-                    imageUrl: AuthService.currentUser?.profileImage,
+                    imageUrl: AuthService.currentUser?.photoUrl,
                     radius: 40,
                   ),
                   const SizedBox(height: AppSizes.paddingM),
@@ -501,7 +501,9 @@ class ProfileTab extends StatelessWidget {
                           _ProfileMenuItem(
                             icon: FontAwesomeIcons.headset,
                             title: 'Bantuan & Support',
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, '/help-support');
+                            },
                           ),
                           _ProfileMenuItem(
                             icon: FontAwesomeIcons.shield,

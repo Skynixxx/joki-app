@@ -1,4 +1,7 @@
-# 📚 Joki Tugas App
+# 📚 Jok- **[🏗️ Arsitektur Sistem](docs/architecture.md)** - Detail arsitektur aplikasi, pattern, dan struktur code
+
+- **[🔐 Sistem Otentikasi](docs/authentication.md)** - Panduan lengkap fitur login, registrasi, dan keamanan
+- **[🔑 Lupa Password](docs/FORGOT_PASSWORD_DOCUMENTATION.md)** - Implementasi dan penggunaan fitur reset passwordgas App
 
 Aplikasi Flutter modern untuk layanan joki tugas dengan desain yang menarik, sistem keamanan yang robust, dan user experience yang optimal.
 
@@ -8,7 +11,8 @@ Untuk informasi lengkap tentang aplikasi ini, silakan kunjungi dokumentasi berik
 
 - **[🏗️ Arsitektur Sistem](docs/architecture.md)** - Detail arsitektur aplikasi, pattern, dan struktur code
 - **[🔐 Sistem Otentikasi](docs/authentication.md)** - Panduan lengkap fitur login, registrasi, dan keamanan
-- **[🔑 Lupa Password](docs/FORGOT_PASSWORD_DOCUMENTATION.md)** - Implementasi dan penggunaan fitur reset password
+- **[� Facebook Login Setup](docs/FACEBOOK_LOGIN_SETUP.md)** - Panduan lengkap setup Facebook login dari console hingga implementasi
+- **[�🔑 Lupa Password](docs/FORGOT_PASSWORD_DOCUMENTATION.md)** - Implementasi dan penggunaan fitur reset password
 - **[🛡️ Keamanan](docs/SECURITY.md)** - Konfigurasi keamanan dan best practices
 - **[🎨 UI/UX Design](docs/ui-ux-design.md)** - Design system, komponen, dan guidelines
 
@@ -20,7 +24,7 @@ Untuk informasi lengkap tentang aplikasi ini, silakan kunjungi dokumentasi berik
 - **Persistent Login**: Session management dengan auto-login setelah refresh
 - **Auto Logout**: Sistem timeout otomatis setelah 10 menit tidak aktif
 - **Forgot Password**: Fitur reset password melalui email dengan Firebase
-- **Social Login**: Integrasi Google Sign-In (UI ready untuk Facebook)
+- **Social Login**: Integrasi Google Sign-In untuk kemudahan akses
 - **Session Security**: Monitoring aktivitas user dan warning sebelum logout
 - **Draft Saving**: Penyimpanan otomatis draft sebelum logout karena timeout
 
@@ -103,21 +107,21 @@ Untuk informasi lengkap tentang aplikasi ini, silakan kunjungi dokumentasi berik
 dependencies:
   flutter:
     sdk: flutter
-  
+
   # Firebase Stack
   firebase_core: ^3.7.1
   firebase_auth: ^5.3.3
   cloud_firestore: ^5.5.0
   google_sign_in: ^6.2.1
-  
+
   # UI & Animations
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.7.0
   flutter_animate: ^4.5.0
-  
+
   # Storage & Utils
   shared_preferences: ^2.2.2
-  
+
   # Development
   flutter_lints: ^4.0.0
 
@@ -131,7 +135,7 @@ dev_dependencies:
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Skynixxx/joki-app.git
 cd joki_app
 ```
 
@@ -177,7 +181,7 @@ joki_app/
 │   │   └── theme.dart                      # Theme configuration dan colors
 │   ├── models/
 │   │   ├── user.dart                       # User data model
-│   │   └── order.dart                      # Order data model  
+│   │   └── order.dart                      # Order data model
 │   ├── screens/
 │   │   ├── splash_screen.dart              # Splash screen dengan animasi
 │   │   ├── auth_screen.dart                # Login/Register dengan tab navigation
@@ -208,6 +212,7 @@ joki_app/
 ## 🎯 Fitur yang Sudah Diimplementasi
 
 ### ✅ Sistem Autentikasi Lengkap
+
 - **Email/Password Authentication**: Register dan login dengan validasi
 - **Google Sign-In**: Social login terintegrasi dengan Firebase
 - **Forgot Password**: Reset password melalui email Firebase
@@ -215,6 +220,7 @@ joki_app/
 - **Security Features**: Activity monitoring dan session validation
 
 ### ✅ User Interface
+
 - **Splash Screen**: Animasi loading dengan gradient background
 - **Material Design 3**: Design system modern dan consistent
 - **Bottom Navigation**: Tab navigation yang smooth dan responsive
@@ -222,12 +228,14 @@ joki_app/
 - **Loading States**: Multiple loading animations dan skeleton screens
 
 ### ✅ Data Management
+
 - **Firebase Integration**: Real-time database dengan Firestore
 - **Local Storage**: SharedPreferences untuk session dan cache
 - **User Profiles**: Avatar system dengan UI Avatars API
 - **Draft System**: Auto-save functionality sebelum logout
 
 ### ✅ Performance & UX
+
 - **Responsive Design**: Optimal untuk berbagai ukuran layar
 - **Smooth Animations**: Flutter animate untuk micro-interactions
 - **Error Handling**: Comprehensive error handling dan user feedback
@@ -236,18 +244,21 @@ joki_app/
 ## 🔮 Roadmap Pengembangan
 
 ### Phase 1 (Current) ✅
+
 - ✅ Core authentication system
 - ✅ Basic UI/UX framework
 - ✅ Firebase integration
 - ✅ Session management
 
 ### Phase 2 (Next)
+
 - [ ] Order management system
 - [ ] Payment gateway integration
 - [ ] Real-time chat system
 - [ ] Push notifications
 
 ### Phase 3 (Future)
+
 - [ ] Advanced analytics
 - [ ] Multi-language support
 - [ ] Advanced security features
@@ -263,16 +274,19 @@ joki_app/
 ## 🧪 Testing
 
 ### Unit Tests
+
 ```bash
 flutter test
 ```
 
 ### Widget Tests
+
 ```bash
 flutter test test/widget_test.dart
 ```
 
 ### Integration Tests
+
 ```bash
 flutter drive --target=test_driver/app.dart
 ```
@@ -280,11 +294,13 @@ flutter drive --target=test_driver/app.dart
 ## 📚 Resources
 
 ### Pembelajaran
+
 - [Flutter Documentation](https://docs.flutter.dev/)
 - [Firebase for Flutter](https://firebase.flutter.dev/)
 - [Material Design Guidelines](https://m3.material.io/)
 
 ### Troubleshooting
+
 - [Authentication Issues](docs/authentication.md#troubleshooting)
 - [Firebase Setup](docs/SECURITY.md#firebase-configuration)
 - [Common Problems](docs/architecture.md#performance-optimization)
@@ -312,4 +328,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-_Dibuat dengan ❤️ menggunakan Flutter • [Dokumentasi Lengkap](docs/) • [Lisensi MIT](LICENSE)_
+_Dibuat dengan menggunakan Flutter • [Dokumentasi Lengkap](docs/) • [Lisensi MIT](LICENSE)_

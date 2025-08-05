@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 
 /// Secure Firebase Configuration
 /// 
@@ -86,13 +87,15 @@ class FirebaseConfig {
 
   // Development helper (DO NOT USE IN PRODUCTION)
   static void printConfiguration() {
-    if (isConfigured) {
-      print('✅ Firebase configuration is valid');
-      print('📱 Project ID: ${firebaseOptions['projectId']}');
-      print('🔐 API Key: ${firebaseOptions['apiKey']!.substring(0, 10)}...');
-    } else {
-      print('❌ Firebase configuration is NOT valid');
-      print('💡 Set environment variables for proper configuration');
+    if (kDebugMode) {
+      if (isConfigured) {
+        debugPrint('✅ Firebase configuration is valid');
+        debugPrint('📱 Project ID: ${firebaseOptions['projectId']}');
+        debugPrint('🔐 API Key: ${firebaseOptions['apiKey']!.substring(0, 10)}...');
+      } else {
+        debugPrint('❌ Firebase configuration is NOT valid');
+        debugPrint('💡 Set environment variables for proper configuration');
+      }
     }
   }
 }

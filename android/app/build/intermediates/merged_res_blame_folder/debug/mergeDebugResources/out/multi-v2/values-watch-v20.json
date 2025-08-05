@@ -1,8 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.joki_app-mergeDebugResources-34:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.example.joki_app-mergeDebugResources-51:/values-watch-v20/values-watch-v20.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\Fikri Haikal\\.gradle\\caches\\8.10.2\\transforms\\3a4dcd3e8c92efa77cfa193b658940d9\\transformed\\appcompat-1.1.0\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "from": {
+                        "startLines": "2,5,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,214,385",
+                        "endLines": "4,7,10",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "209,380,553"
+                    },
+                    "to": {
+                        "startLines": "10,13,16",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "715,874,1045",
+                        "endLines": "12,15,18",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "869,1040,1213"
+                    }
+                },
                 {
                     "source": "C:\\Users\\Fikri Haikal\\.gradle\\caches\\8.10.2\\transforms\\41fd65a6a815b5614b87b654f9cfd65e\\transformed\\jetified-play-services-auth-21.0.0\\res\\values-watch-v20\\values.xml",
                     "from": {

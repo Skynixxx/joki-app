@@ -1,26 +1,26 @@
 [
     {
-        "merged": "com.example.joki_app-debug-36:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.example.joki_app-main-38:/mipmap-hdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-debug-53:\\drawable-v21_launch_background.xml.flat",
+        "source": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-main-55:\\drawable-v21\\launch_background.xml"
     },
     {
-        "merged": "com.example.joki_app-debug-36:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.example.joki_app-main-38:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-debug-53:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-main-55:\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.example.joki_app-debug-36:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.example.joki_app-main-38:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-debug-53:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-main-55:\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.example.joki_app-debug-36:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.example.joki_app-main-38:/mipmap-mdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-debug-53:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-main-55:\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.example.joki_app-debug-36:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.example.joki_app-main-38:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-debug-53:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-main-55:\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.example.joki_app-debug-36:/drawable-v21_launch_background.xml.flat",
-        "source": "com.example.joki_app-main-38:/drawable-v21/launch_background.xml"
+        "merged": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-debug-53:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Fikri Haikal\\.gradle\\daemon\\8.10.2\\com.example.joki_app-main-55:\\mipmap-xxhdpi\\ic_launcher.png"
     }
 ]

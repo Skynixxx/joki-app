@@ -48,6 +48,21 @@ app.*.map.json
 # Environment variables and secrets
 .env
 .env.*
+
+# SECURITY: Firebase and API configurations
+lib/config/firebase_config_local.dart
+lib/config/firebase_config.dart
+google-services.json
+GoogleService-Info.plist
+**/firebase_options.dart
+
+# SECURITY: Sensitive data files
+**/*_config_local.*
+**/*secret*
+**/*credential*
+**/*key*
+**/*token*
+!pubspec.lock
 .env.local
 
 # Firebase configuration with real API keys

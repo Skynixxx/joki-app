@@ -7,7 +7,7 @@ import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/help_support_screen.dart';
-import 'config/firebase_config.dart';
+import 'config/firebase_config_secure.dart';
 import 'services/auth_service.dart';
 import 'services/session_manager.dart';
 import 'widgets/activity_detector.dart';
@@ -16,11 +16,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
+    // Validate Firebase configuration
+    FirebaseConfig.validateConfiguration();
+    
     // Initialize Firebase
     await Firebase.initializeApp(options: FirebaseConfig.currentPlatform);
 
     // Initialize AuthService to check for existing user
     await AuthService.initialize();
+    
+    if (kDebugMode) {
+      FirebaseConfig.printConfiguration();
+    }
   } catch (e) {
     // Handle Firebase initialization error gracefully
     if (kDebugMode) {

@@ -1,4 +1,4 @@
-# 📚 Jok- **[🏗️ Arsitektur Sistem](docs/architecture.md)** - Detail arsitektur aplikasi, pattern, dan struktur code
+# 📚 Joki App**[🏗️ Arsitektur Sistem](docs/architecture.md)** - Detail arsitektur aplikasi, pattern, dan struktur code
 
 - **[🔐 Sistem Otentikasi](docs/authentication.md)** - Panduan lengkap fitur login, registrasi, dan keamanan
 - **[🔑 Lupa Password](docs/FORGOT_PASSWORD_DOCUMENTATION.md)** - Implementasi dan penggunaan fitur reset passwordgas App

@@ -1,7 +1,8 @@
 # 📚 Joki App**[🏗️ Arsitektur Sistem](docs/architecture.md)** - Detail arsitektur aplikasi, pattern, dan struktur code
 
 - **[🔐 Sistem Otentikasi](docs/authentication.md)** - Panduan lengkap fitur login, registrasi, dan keamanan
-- **[🔑 Lupa Password](docs/FORGOT_PASSWORD_DOCUMENTATION.md)** - Implementasi dan penggunaan fitur reset passwordgas App
+- **[🔑 Lupa Password](docs/FORGOT_PASSWORD_DOCUMENTATION.md)** - Implementasi dan penggunaan fitur reset password
+- **[🛡️ Keamanan](docs/SECURITY.md)** - Konfigurasi keamanan dan best practices untuk API keysgas App
 
 Aplikasi Flutter modern untuk layanan joki tugas dengan desain yang menarik, sistem keamanan yang robust, dan user experience yang optimal.
 
@@ -270,6 +271,66 @@ joki_app/
 - **Startup Time**: <2 seconds pada device rata-rata
 - **Memory Usage**: ~50MB runtime usage
 - **Battery Optimization**: Efficient dengan background limitations
+
+## 🔧 Setup & Installation
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/Skynixxx/joki-app.git
+cd joki-app
+```
+
+### 2. Install Dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. 🔒 Firebase Security Setup
+
+**CRITICAL**: This app uses environment variables for Firebase configuration to ensure security.
+
+#### Option A: Using .env file (Development)
+1. Copy environment template:
+   ```bash
+   cp .env.example .env
+   ```
+2. Edit `.env` file with your actual Firebase credentials
+3. Install flutter_dotenv: `flutter pub add flutter_dotenv`
+
+#### Option B: Using dart-define (Recommended)
+```bash
+flutter run \
+  --dart-define=FIREBASE_API_KEY=your_api_key \
+  --dart-define=FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com \
+  --dart-define=FIREBASE_PROJECT_ID=your-project-id \
+  --dart-define=FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app \
+  --dart-define=FIREBASE_MESSAGING_SENDER_ID=000000000000 \
+  --dart-define=FIREBASE_APP_ID=1:000000000000:web:your_app_id \
+  --dart-define=FIREBASE_MEASUREMENT_ID=G-YOUR_MEASUREMENT_ID \
+  --dart-define=GOOGLE_SIGNIN_CLIENT_ID=your_client_id.apps.googleusercontent.com
+```
+
+#### Production Deployment
+Set environment variables in your deployment platform:
+- **Vercel**: Add to Environment Variables in dashboard
+- **Firebase Hosting**: Use firebase functions:config:set
+- **GitHub Actions**: Add to repository secrets
+
+### 4. Run Application
+
+```bash
+flutter run
+```
+
+## 🛡️ Security Features
+
+- **🔐 Environment Variables**: All API keys stored securely
+- **🚫 No Hardcoded Credentials**: Zero sensitive data in source code
+- **📝 Enhanced .gitignore**: Comprehensive security patterns
+- **🔍 Security Validation**: Runtime configuration checks
+- **📋 Security Documentation**: Complete incident response guide
 
 ## 🧪 Testing
 

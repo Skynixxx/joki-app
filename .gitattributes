@@ -1,0 +1,18 @@
+# Git attributes untuk permanent security
+# File-file ini TIDAK BOLEH PERNAH di-commit
+
+# Firebase configuration files - BLOCKED
+lib/config/firebase_config.dart filter=secret
+lib/config/firebase_config_local.dart filter=secret
+lib/firebase_config.dart filter=secret
+
+# Google Services files - BLOCKED  
+android/app/google-services.json filter=secret
+ios/Runner/GoogleService-Info.plist filter=secret
+web/firebase_config.js filter=secret
+
+# Generic sensitive patterns - BLOCKED
+*secret* filter=secret
+*credential* filter=secret
+*.key filter=secret
+*token* filter=secret

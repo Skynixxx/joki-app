@@ -48,46 +48,36 @@ app.*.map.json
 # Environment variables and secrets
 .env
 .env.*
+.env.local
+.env.development
+.env.production
+.env.staging
 
-# SECURITY: Firebase and API configurations
+# SECURITY: Firebase and API configurations - PERMANENT EXCLUSION
 lib/config/firebase_config_local.dart
 lib/config/firebase_config.dart
+lib/firebase_config.dart
+lib/firebase_options.dart
+**/firebase_options.dart
 google-services.json
 GoogleService-Info.plist
-**/firebase_options.dart
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+web/firebase_config.js
 
-# SECURITY: Sensitive data files
+# SECURITY: Firebase private keys and credentials
+firebase-adminsdk-*.json
+firebase_options.dart
+
+# SECURITY: Sensitive data files - NEVER COMMIT
 **/*_config_local.*
 **/*secret*
 **/*credential*
 **/*key*
 **/*token*
-!pubspec.lock
-.env.local
-
-# Firebase configuration with real API keys
-lib/config/firebase_config_local.dart
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
-ios/firebase_app_id_file.json
-.env.development
-.env.production
-.env.staging
-
-# Firebase private keys and configuration
-firebase-adminsdk-*.json
-google-services.json
-GoogleService-Info.plist
-firebase_options.dart
-lib/firebase_options.dart
-lib/firebase_config.dart
-lib/config/firebase_config.dart
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
-web/firebase_config.js
-
-# API Keys and secrets
 *.key
+!pubspec.lock
 *.pem
 *.p8
 *.p12
